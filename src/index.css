@@ -65,11 +65,10 @@ code {
 @import url(blocks/popup-form/__save-button/popup-form__save-button.css);
 @import url(blocks/popup-form/__save-button/_inactive/popup-form__save-button_inactive.css);
 /*  */
-@import url(blocks/popup-form-new/popup-form-new.css);
-@import url(blocks/popup-form-new/__close-button/popup-form-new__close-button.css);
+
 @import url(blocks/popup-form-new/__input-link/popup-form-new__input-link.css);
 @import url(blocks/popup-form-new/__input-name/popup-form-new__input-name.css);
-@import url(blocks/popup-form-new/__wrapper/popup-form-new__wrapper.css);
+
 /*  */
 @import url(blocks/popup-card/popup-card.css);
 @import url(blocks/popup-card/__wrapper/popup-card__wrapper.css);
@@ -83,8 +82,8 @@ code {
 
 /* @import url(/blocks/button.css); */
 
-@import url(blocks/popup-edit/__button-close/popup-edit__button-close.css);
-@import url(blocks/popup-edit/__button/popup-edit__button.css);
-@import url(blocks/popup-edit/__form/popup-edit__form.css);
+
+
+
 @import url(blocks/popup-edit/__input/popup-edit__input.css);
-@import url(blocks/popup-edit/popup-edit.css);
+
