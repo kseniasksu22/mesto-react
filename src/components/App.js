@@ -8,6 +8,8 @@ import ImagePopup from "./ImagePopup";
 import PopupCard from "./PopupCard";
 import PopupEdit from "./PopupEdit";
 import PopupAvatar from "./PopupAvatar";
+import Card from "./Card";
+import api from "../utils/api.js";
 function App() {
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(
     false
@@ -70,6 +72,7 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       />
+      <Card />
       <ImagePopup />
       <Footer />
     </div>

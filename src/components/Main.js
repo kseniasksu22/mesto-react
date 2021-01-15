@@ -1,6 +1,18 @@
 import React from "react";
-
+import api from "../utils/api.js";
 function Main(props) {
+  const [userAvatar, setuserAvatar] = React.useState();
+  const [userDescription, setuserDescription] = React.useState();
+  const [userName, setuserName] = React.useState();
+
+  React.useEffect(() => {
+    api.getUserInfo().then((res) => {
+      setuserName(res.name);
+      setuserAvatar(res.avatar);
+      setuserDescription(res.about);
+    });
+  }, []);
+
   return (
     <main className="main">
       <section className="profile">
@@ -8,11 +20,11 @@ function Main(props) {
           className="profile__button"
           onClick={props.onEditAvatar}
         ></button>
-        <img className="profile__avatar" src="" alt=" Аватарка" />
+        <img className="profile__avatar" src={userAvatar} alt=" Аватарка" />
         <div className="profile-info">
           <div className="profile-info__wrapper">
-            <h1 className="profile-info__name">Жак-Ив Кусто</h1>
-            <p className="profile-info__description">Исследователь океана</p>
+            <h1 className="profile-info__name">{userName}</h1>
+            <p className="profile-info__description">{userDescription}</p>
           </div>
           <button
             type="button"
@@ -25,20 +37,6 @@ function Main(props) {
           className="profile__add-button"
           onClick={props.onAddPlace}
         ></button>
-      </section>
-
-      <section className="elements">
-        <template className="template">
-          <div id="" className="element">
-            <img className="element__image" src="" alt="" />
-            <div className="element__wrapper">
-              <h2 className="element__caption"></h2>
-              <button type="button" className="element__delete"></button>
-              <button type="button" className="element__like"></button>
-              <div className="element__like-counter">0</div>
-            </div>
-          </div>
-        </template>
       </section>
     </main>
   );
