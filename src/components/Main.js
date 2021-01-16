@@ -1,10 +1,16 @@
 import React from "react";
 import api from "../utils/api.js";
+import Card from "./Card";
 function Main(props) {
   const [userAvatar, setuserAvatar] = React.useState();
   const [userDescription, setuserDescription] = React.useState();
   const [userName, setuserName] = React.useState();
-
+  const [cards, setcards] = React.useState([]);
+  React.useEffect(() => {
+    api.getAllCards().then((res) => {
+      setcards(res);
+    });
+  }, []);
   React.useEffect(() => {
     api.getUserInfo().then((res) => {
       setuserName(res.name);
@@ -37,6 +43,11 @@ function Main(props) {
           className="profile__add-button"
           onClick={props.onAddPlace}
         ></button>
+      </section>
+      <section className="elements">
+        {cards.map((card) => (
+          <Card card={card} onCardClick={props.onCardClick} key={card._id} />
+        ))}
       </section>
     </main>
   );

@@ -5,11 +5,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import PopupCard from "./PopupCard";
-import PopupEdit from "./PopupEdit";
-import PopupAvatar from "./PopupAvatar";
-import Card from "./Card";
-import api from "../utils/api.js";
+
 function App() {
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(
     false
@@ -18,6 +14,9 @@ function App() {
     false
   );
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
+
+  const [selectedCard, setselectedCard] = React.useState(false);
+
   function handleEditAvatarClick() {
     setisEditAvatarPopupOpen(true);
   }
@@ -28,10 +27,14 @@ function App() {
   function handleAddPlaceClick() {
     setisAddPlacePopupOpen(true);
   }
+  function handleCardClick(card) {
+    setselectedCard(card);
+  }
   function closeAllPopups() {
     setisEditAvatarPopupOpen(false);
     setisAddPlacePopupOpen(false);
     setisEditProfilePopupOpen(false);
+    setselectedCard(false);
   }
   return (
     <div>
@@ -40,24 +43,66 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
+        onCardClick={handleCardClick}
       />
+
       <PopupWithForm
         name="form-new"
         title="Новое место"
         submitButtonText=" Создать"
-        children={PopupCard()}
         onClose={closeAllPopups}
         isOpen={isAddPlacePopupOpen}
-      />
+      >
+        {" "}
+        <>
+          <input
+            type="text"
+            name="nameCard"
+            placeholder="Название"
+            className="popup-form__input popup-form-new__input-name"
+            required
+            minLength="1"
+            maxLength="30"
+          />
+          <span className="error" id="nameCard-error"></span>
+          <input
+            type="url"
+            name="link"
+            placeholder="Ссылка на картинку"
+            className="popup-form__input popup-form-new__input-link"
+            required
+          />
+          <span className="error" id="link-error"></span>
+        </>
+      </PopupWithForm>
       <PopupWithForm
         name="form-edit"
         title="Редактировать профиль"
         submitButtonText=" Сохранить"
-        children={PopupEdit()}
         onClose={closeAllPopups}
         isOpen={isEditProfilePopupOpen}
-      />
-
+      >
+        <>
+          <input
+            type="text"
+            name="name"
+            className="popup-form__input popup-form__input-name"
+            required
+            minLength="2"
+            maxLength="40"
+          />
+          <span className="error" id="name-error"></span>
+          <input
+            type="text"
+            name="description"
+            className="popup-form__input popup-form__input-description"
+            required
+            minLength="2"
+            maxLength="200"
+          />
+          <span className="error" id="description-error"></span>
+        </>
+      </PopupWithForm>
       <PopupWithForm
         name="deleted-card"
         title="Вы уверены?"
@@ -68,12 +113,21 @@ function App() {
         name="form-avatar"
         title="Обновить аватар"
         submitButtonText=" Сохранить"
-        children={PopupAvatar()}
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
-      />
-      <Card />
-      <ImagePopup />
+      >
+        <>
+          <input
+            type="url"
+            name="linkAvatar"
+            className="popup-form__input popup-form-avatar__input"
+            placeholder="Ссылка на картинку"
+            required
+          />
+          <span className="error" id="linkAvatar-error"></span>
+        </>
+      </PopupWithForm>
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       <Footer />
     </div>
   );
