@@ -1,4 +1,3 @@
-import "../index.css";
 import React from "react";
 import Header from "./Header";
 import Main from "./Main";
@@ -15,7 +14,7 @@ function App() {
   );
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
 
-  const [selectedCard, setselectedCard] = React.useState(false);
+  const [selectedCard, setselectedCard] = React.useState(null);
 
   function handleEditAvatarClick() {
     setisEditAvatarPopupOpen(true);
@@ -34,7 +33,7 @@ function App() {
     setisEditAvatarPopupOpen(false);
     setisAddPlacePopupOpen(false);
     setisEditProfilePopupOpen(false);
-    setselectedCard(false);
+    setselectedCard(null);
   }
   return (
     <div>
@@ -53,7 +52,6 @@ function App() {
         onClose={closeAllPopups}
         isOpen={isAddPlacePopupOpen}
       >
-        {" "}
         <>
           <input
             type="text"
@@ -84,6 +82,7 @@ function App() {
       >
         <>
           <input
+            placeholder="Имя"
             type="text"
             name="name"
             className="popup-form__input popup-form__input-name"
@@ -93,6 +92,7 @@ function App() {
           />
           <span className="error" id="name-error"></span>
           <input
+            placeholder="О себе"
             type="text"
             name="description"
             className="popup-form__input popup-form__input-description"

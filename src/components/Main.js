@@ -2,21 +2,24 @@ import React from "react";
 import api from "../utils/api.js";
 import Card from "./Card";
 function Main(props) {
-  const [userAvatar, setuserAvatar] = React.useState();
-  const [userDescription, setuserDescription] = React.useState();
-  const [userName, setuserName] = React.useState();
+  const [userAvatar, setuserAvatar] = React.useState("");
+  const [userDescription, setuserDescription] = React.useState("");
+  const [userName, setuserName] = React.useState("");
   const [cards, setcards] = React.useState([]);
+
   React.useEffect(() => {
-    api.getAllCards().then((res) => {
-      setcards(res);
-    });
-  }, []);
-  React.useEffect(() => {
-    api.getUserInfo().then((res) => {
-      setuserName(res.name);
-      setuserAvatar(res.avatar);
-      setuserDescription(res.about);
-    });
+    Promise.all([api.getUserInfo(), api.getAllCards()])
+      .then((values) => {
+        const [userData, initialCards] = values;
+
+        setuserName(userData.name);
+        setuserAvatar(userData.avatar);
+        setuserDescription(userData.about);
+        setcards(initialCards);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (

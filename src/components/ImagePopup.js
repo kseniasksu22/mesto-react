@@ -6,9 +6,13 @@ function ImagePopup(props) {
       className={`popup-card popup ${!props.card ? "" : "popup-form_showed"}`}
     >
       <figure className="popup-card__wrapper">
-        <img className="popup-card__image" src={props.card.link} alt="" />
+        <img
+          className="popup-card__image"
+          src={props.card ? props.card.link : ""}
+          alt={props.card ? props.card.name : ""}
+        />
         <figcaption className="popup-card__caption">
-          {props.card.name}
+          {props.card ? props.card.name : ""}
         </figcaption>
         <button
           className="popup-card__button popup-form__close-button"

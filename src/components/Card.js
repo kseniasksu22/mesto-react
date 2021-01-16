@@ -10,6 +10,7 @@ function Card(props) {
         src={props.card.link}
         alt=""
         onClick={handleClick}
+        alt={props.card.name}
       />
       <div className="element__wrapper">
         <h2 className="element__caption">{props.card.name}</h2>
