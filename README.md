@@ -4,7 +4,7 @@
 
 =======
 
-Github Pages: [https://kseniasksu22.github.io/mesto/index.html](https://kseniasksu22.github.io/mesto-react/public/index.html "https://kseniasksu22.github.io/mesto-react/public/index.html")<br>
+Github Pages: ["https://kseniasksu22.github.io/mesto-react](https://kseniasksu22.github.io/mesto-react "https://kseniasksu22.github.io/mesto-react")<br>
 Девятая часть сервиса обмена картинками. Проект реализован как практическое задание от Yandex.Praktikum.
 
 **Используется:**<br>
