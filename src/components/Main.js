@@ -10,17 +10,6 @@ function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    Promise.all([api.getAllCards()])
-      .then((values) => {
-        const [initialCards] = values;
-
-        setCards(initialCards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  React.useEffect(() => {
     api
       .getAllCards()
       .then((res) => {
@@ -30,6 +19,22 @@ function Main(props) {
         console.log(err);
       });
   }, []);
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    let isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    function requestLike(newCard) {
+      const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+      setCards(newCards);
+    }
+    if (!isLiked) {
+      // Отправляем запрос в API и получаем обновлённые данные карточки
+      api.putLike(card._id).then(requestLike);
+    } else {
+      api.deleteLike(card._id).then(requestLike);
+    }
+  }
 
   return (
     <main className="main">
@@ -62,7 +67,12 @@ function Main(props) {
       </section>
       <section className="elements">
         {cards.map((card) => (
-          <Card card={card} onCardClick={props.onCardClick} key={card._id} />
+          <Card
+            card={card}
+            onCardClick={props.onCardClick}
+            key={card._id}
+            onCardLike={handleCardLike}
+          />
         ))}
       </section>
     </main>
