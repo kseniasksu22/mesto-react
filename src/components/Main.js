@@ -1,21 +1,30 @@
 import React from "react";
 import api from "../utils/api.js";
 import Card from "./Card";
+import { CurrentUserContext } from "../context/CurrentUserContext";
 function Main(props) {
-  const [userAvatar, setuserAvatar] = React.useState("");
-  const [userDescription, setuserDescription] = React.useState("");
-  const [userName, setuserName] = React.useState("");
-  const [cards, setcards] = React.useState([]);
+  // const [userAvatar, setuserAvatar] = React.useState("");
+  // const [userDescription, setuserDescription] = React.useState("");
+  // const [userName, setuserName] = React.useState("");
+  const [cards, setCards] = React.useState([]);
+  const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getAllCards()])
+    Promise.all([api.getAllCards()])
       .then((values) => {
-        const [userData, initialCards] = values;
+        const [initialCards] = values;
 
-        setuserName(userData.name);
-        setuserAvatar(userData.avatar);
-        setuserDescription(userData.about);
-        setcards(initialCards);
+        setCards(initialCards);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  React.useEffect(() => {
+    api
+      .getAllCards()
+      .then((res) => {
+        setCards(res);
       })
       .catch((err) => {
         console.log(err);
@@ -29,11 +38,15 @@ function Main(props) {
           className="profile__button"
           onClick={props.onEditAvatar}
         ></button>
-        <img className="profile__avatar" src={userAvatar} alt=" Аватарка" />
+        <img
+          className="profile__avatar"
+          src={currentUser.avatar}
+          alt=" Аватарка"
+        />
         <div className="profile-info">
           <div className="profile-info__wrapper">
-            <h1 className="profile-info__name">{userName}</h1>
-            <p className="profile-info__description">{userDescription}</p>
+            <h1 className="profile-info__name">{currentUser.name}</h1>
+            <p className="profile-info__description">{currentUser.about}</p>
           </div>
           <button
             type="button"
