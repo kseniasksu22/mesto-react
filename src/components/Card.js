@@ -17,13 +17,10 @@ function Card(props) {
   }`;
 
   function handleLikeClick() {
-    console.log(isLiked);
-    
     props.onCardLike(props.card);
   }
 
   function handleDeleteClick() {
-    console.log("ghghgh");
     props.onCardDelete(props.card);
   }
   return (
@@ -37,7 +34,11 @@ function Card(props) {
       />
       <div className="element__wrapper">
         <h2 className="element__caption">{props.card.name}</h2>
-        <button type="button" className={cardDeleteButtonClassName}></button>
+        <button
+          type="button"
+          className={cardDeleteButtonClassName}
+          onClick={handleDeleteClick}
+        ></button>
         <button
           type="button"
           className={cardLikeButtonClassName}

@@ -35,7 +35,12 @@ function Main(props) {
       api.deleteLike(card._id).then(requestLike);
     }
   }
-
+  function handleCardDelete(card) {
+    api.deleteCard(card._id).then(() => {
+      const Cards = cards.filter((item) => item !== card);
+      setCards(Cards);
+    });
+  }
   return (
     <main className="main">
       <section className="profile">
@@ -72,6 +77,7 @@ function Main(props) {
             onCardClick={props.onCardClick}
             key={card._id}
             onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
           />
         ))}
       </section>
