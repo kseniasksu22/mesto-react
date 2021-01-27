@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
+import EditProfilePopup from "./EditProfilePopup";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 
 function App() {
@@ -49,6 +50,13 @@ function App() {
     setisEditProfilePopupOpen(false);
     setselectedCard(null);
   }
+
+  function handleUpdateUser(data) {
+    api.setUserInfo(data).then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    });
+  }
   return (
     <div>
       <Header />
@@ -88,36 +96,13 @@ function App() {
             <span className="error" id="link-error"></span>
           </>
         </PopupWithForm>
-        <PopupWithForm
-          name="form-edit"
-          title="Редактировать профиль"
-          submitButtonText=" Сохранить"
-          onClose={closeAllPopups}
+
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
-        >
-          <>
-            <input
-              placeholder="Имя"
-              type="text"
-              name="name"
-              className="popup-form__input popup-form__input-name"
-              required
-              minLength="2"
-              maxLength="40"
-            />
-            <span className="error" id="name-error"></span>
-            <input
-              placeholder="О себе"
-              type="text"
-              name="description"
-              className="popup-form__input popup-form__input-description"
-              required
-              minLength="2"
-              maxLength="200"
-            />
-            <span className="error" id="description-error"></span>
-          </>
-        </PopupWithForm>
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
+
         <PopupWithForm
           name="deleted-card"
           title="Вы уверены?"

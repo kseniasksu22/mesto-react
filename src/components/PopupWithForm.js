@@ -11,6 +11,7 @@ function PopupWithForm(props) {
         <h3 className="popup-form__title">{props.title}</h3>
         {props.children}
         <button
+          onClick={props.onSubmit}
           type="submit"
           className={`popup-form__save-button popup-${props.submitButtonName}`}
         >
