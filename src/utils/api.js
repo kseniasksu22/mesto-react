@@ -85,7 +85,7 @@ export class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: pic,
+        avatar: pic.avatar,
       }),
     });
 
