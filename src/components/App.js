@@ -42,15 +42,20 @@ function App() {
       setCards(newCards);
     }
     if (!isLiked) {
-      api.putLike(card._id).then(requestLike);
+      api
+        .putLike(card._id)
+        .then(requestLike)
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
       api.deleteLike(card._id).then(requestLike);
     }
   }
   function handleCardDelete(card) {
     api.deleteCard(card._id).then(() => {
-      const Cards = cards.filter((item) => item !== card);
-      setCards(Cards);
+      const newCard = cards.filter((item) => item !== card);
+      setCards(newCard);
     });
   }
 
@@ -89,10 +94,32 @@ function App() {
   }
   function handleSubmitCard(data) {
     api.postNewCard(data).then((data) => {
-      setCards([...cards, data]);
+      setCards([data, ...cards]);
       closeAllPopups();
     });
   }
+  function escHandle(e) {
+    console.log(e);
+    if (e.keyCode === 27) {
+      closeAllPopups();
+    }
+  }
+  function closeByOverlay(e) {
+    console.log(e);
+    if (e.target.classList.contains("popup")) {
+      closeAllPopups();
+    }
+  }
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", escHandle);
+    document.addEventListener("mousedown", closeByOverlay);
+    return () => {
+      document.removeEventListener("keydown", escHandle);
+      document.removeEventListener("mousedown", closeByOverlay);
+    };
+  });
+
   return (
     <div>
       <Header />
