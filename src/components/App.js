@@ -22,6 +22,7 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const escCode = 27;
+  
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getAllCards()])
       .then((values) => {
