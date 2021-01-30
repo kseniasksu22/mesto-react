@@ -21,7 +21,7 @@ function App() {
   const [selectedCard, setselectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
-
+  const escCode = 27;
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getAllCards()])
       .then((values) => {
@@ -58,10 +58,15 @@ function App() {
     }
   }
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      const newCard = cards.filter((item) => item !== card);
-      setCards(newCard);
-    });
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        const newCard = cards.filter((item) => item !== card);
+        setCards(newCard);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   function handleEditAvatarClick() {
@@ -85,32 +90,45 @@ function App() {
   }
 
   function handleUpdateUser(data) {
-    api.setUserInfo(data).then((res) => {
-      setCurrentUser(res);
-      closeAllPopups();
-    });
+    api
+      .setUserInfo(data)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   function handleUpdateAvatar(data) {
-    api.getAvatarInfo(data).then((res) => {
-      setCurrentUser(res);
-      closeAllPopups();
-    });
+    api
+      .getAvatarInfo(data)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
   function handleSubmitCard(data) {
-    api.postNewCard(data).then((data) => {
-      setCards([data, ...cards]);
-      closeAllPopups();
-    });
+    api
+      .postNewCard(data)
+      .then((data) => {
+        setCards([data, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
   function escHandle(e) {
-    console.log(e);
-    if (e.keyCode === 27) {
+    if (e.keyCode === escCode) {
       closeAllPopups();
     }
   }
   function closeByOverlay(e) {
-    console.log(e);
     if (e.target.classList.contains("popup")) {
       closeAllPopups();
     }
