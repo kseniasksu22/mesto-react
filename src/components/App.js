@@ -49,7 +49,12 @@ function App() {
           console.error(err);
         });
     } else {
-      api.deleteLike(card._id).then(requestLike);
+      api
+        .deleteLike(card._id)
+        .then(requestLike)
+        .catch((err) => {
+          console.error(err);
+        });
     }
   }
   function handleCardDelete(card) {
