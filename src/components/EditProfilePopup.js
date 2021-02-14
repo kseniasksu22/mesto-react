@@ -6,8 +6,8 @@ function EditProfilePopup(props) {
   const nameRef = React.useRef();
   const aboutRef = React.useRef();
 
-  const [inputError, setInputError] = React.useState(false);
-
+  const [inpuNameError, setInputNameError] = React.useState(false);
+  const [inputAboutError, setInputAboutError] = React.useState(false);
   const [disable, setDisable] = React.useState(false);
 
   const [name, setName] = React.useState("");
@@ -17,17 +17,20 @@ function EditProfilePopup(props) {
 
   function handleNameChange(e) {
     setName(e.target.value);
-    validateInputs();
+    validateNameInput();
   }
 
   function handleAboutChange(e) {
     setDescription(e.target.value);
+    validateAboutInput();
   }
 
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-    setInputError(true);
+    setInputAboutError(true);
+    setInputNameError(true);
+    setDisable(false);
   }, [currentUser]);
 
   function handleInfoSubmit(e) {
@@ -38,10 +41,15 @@ function EditProfilePopup(props) {
     });
   }
 
-  function validateInputs() {
+  function validateNameInput() {
     !nameRef.current.validity.valid
-      ? setInputError(false)
-      : setInputError(true);
+      ? setInputNameError(false) || setDisable(true)
+      : setInputNameError(true) || setDisable(false);
+  }
+  function validateAboutInput() {
+    !aboutRef.current.validity.valid
+      ? setInputAboutError(false) || setDisable(true)
+      : setInputAboutError(true) || setDisable(false);
   }
 
   return (
@@ -68,12 +76,13 @@ function EditProfilePopup(props) {
           onChange={handleNameChange}
         />
         <span
-          className={`error ${inputError ? "" : "error_active"}`}
+          className={`error ${inpuNameError ? "" : "error_active"}`}
           id="name-error"
         >
           Имя не может иметь меньше чем 2 и больше чем 40 букв
         </span>
         <input
+          value={description}
           ref={aboutRef}
           placeholder={description}
           type="text"
@@ -84,7 +93,12 @@ function EditProfilePopup(props) {
           maxLength="200"
           onChange={handleAboutChange}
         />
-        <span className="error" id="description-error"></span>
+        <span
+          className={`error ${inputAboutError ? "" : "error_active"}`}
+          id="description-error"
+        >
+          Био не может иметь меньше чем 2 и больше чем 200 букв
+        </span>
       </>
     </PopupWithForm>
   );

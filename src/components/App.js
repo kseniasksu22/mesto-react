@@ -24,11 +24,7 @@ function App() {
   //disabled button/////////////////////////////////////////////////////////////////////////////////////////
 
   const escCode = 27;
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> fbf581e93639772bed3a96eb3715a5655ad143c1
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getAllCards()])
       .then((values) => {

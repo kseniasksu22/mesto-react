@@ -3,9 +3,7 @@ import React from "react";
 
 function EditAvatarPopup(props) {
   const inputRef = React.useRef();
-  const [formValues, setFormValues] = React.useState({
-    cardLink: "",
-  });
+  const [inpuAvatarError, setInputAvatarError] = React.useState(false);
   function handleAvatarSubmit(e) {
     e.preventDefault();
     props.onUpdateAvatar({
@@ -13,7 +11,7 @@ function EditAvatarPopup(props) {
     });
     inputRef.current.value = "";
   }
-
+  function validateAvatar() {}
   return (
     <PopupWithForm
       name="form-avatar"
@@ -32,7 +30,10 @@ function EditAvatarPopup(props) {
           placeholder="Ссылка на картинку"
           required
         />
-        <span className="error" id="linkAvatar-error">
+        <span
+          className={`error ${!inpuAvatarError ? "" : "error_active"}`}
+          id="linkAvatar-error"
+        >
           Вставьте, пожалуйста, ссылку на картинку
         </span>
       </>
