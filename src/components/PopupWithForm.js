@@ -13,7 +13,10 @@ function PopupWithForm(props) {
         <button
           onClick={props.onSubmit}
           type="submit"
-          className={`popup-form__save-button popup-${props.submitButtonName}`}
+          className={`popup-form__save-button popup-${props.submitButtonName} ${
+            !props.isDisable ? "" : "popup-form__save-button_inactive"
+          }`}
+          onChange={props.onDisable}
         >
           {props.submitButtonText}
         </button>

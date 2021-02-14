@@ -21,8 +21,14 @@ function App() {
   const [selectedCard, setselectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  //disabled button/////////////////////////////////////////////////////////////////////////////////////////
+
   const escCode = 27;
+<<<<<<< HEAD
+
+=======
   
+>>>>>>> fbf581e93639772bed3a96eb3715a5655ad143c1
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getAllCards()])
       .then((values) => {
