@@ -4,6 +4,15 @@ import React from "react";
 function EditAvatarPopup(props) {
   const inputRef = React.useRef();
   const [inpuAvatarError, setInputAvatarError] = React.useState(false);
+  const [inputUrl, setInputUrl] = React.useState("");
+  const [disable, setDisable] = React.useState(false);
+  console.log(inputUrl);
+
+  function handleAvatarChange(e) {
+    setInputUrl(e.target.value);
+    validateAvatar();
+  }
+
   function handleAvatarSubmit(e) {
     e.preventDefault();
     props.onUpdateAvatar({
@@ -11,9 +20,17 @@ function EditAvatarPopup(props) {
     });
     inputRef.current.value = "";
   }
-  function validateAvatar() {}
+
+  function validateAvatar() {
+    inputRef.current.validity.valid
+      ? setInputAvatarError(false) || setDisable(false)
+      : setInputAvatarError(true) || setDisable(true);
+  }
+
   return (
     <PopupWithForm
+      isDisable={disable}
+      value={inputUrl}
       name="form-avatar"
       title="Обновить аватар"
       submitButtonText=" Сохранить"
@@ -28,6 +45,7 @@ function EditAvatarPopup(props) {
           name="avatar"
           className="popup-form__input popup-form-avatar__input"
           placeholder="Ссылка на картинку"
+          onChange={handleAvatarChange}
           required
         />
         <span
